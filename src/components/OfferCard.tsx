@@ -1,21 +1,20 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-//import CardActionArea from '@material-ui/core/CardActionArea';
 import Typography from '@material-ui/core/Typography';
-//import { makeStyles } from '@material-ui/core/styles';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
-
+import NtbImage from '../images/ntb1.jpg';
 
 const OfferCard: FC = () =>{
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} lg={3}>
       <Card>
         <CardContent>
-          <img src='../../public/ntb1.jpg' alt='notebook'/>
+          <img src={NtbImage} alt="NTB" width={200}/>
+          <Typography variant="subtitle2">Notebook Lenovo</Typography>
         </CardContent>
 
         <CardActions>
@@ -26,7 +25,6 @@ const OfferCard: FC = () =>{
       </Card>
     </Grid>
   )
-
 }
 
 export default OfferCard

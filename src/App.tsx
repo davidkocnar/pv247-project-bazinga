@@ -5,21 +5,23 @@ import { Link, Redirect, Route, Switch, BrowserRouter as Router } from 'react-ro
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { signOut, useLoggedInUser } from './firebase/auth';
+import Logo from './images/logo.png';
 
 const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
   menuButton: { marginRight: theme.spacing(2) },
   link: { textDecoration: 'none' },
+  logo: {verticalAlign: 'middle'}
 }));
 
 // MUI theme override
 const ourTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#4ca235',
+      main: '#A7BF96',
     },
     secondary: {
-      main: '#FFF861',
+      main: '#2B2D40',
     },
   },
 });
@@ -35,10 +37,11 @@ function App() {
   return (
     <MuiThemeProvider theme={ourTheme}>
       <Router>
-        <AppBar color="primary" position="static" variant="outlined">
+        <AppBar color="transparent" position="static" variant="outlined">
           {/* Navigation rendered on all pages */}
           <Toolbar className={classes.toolbar}>
             <div>
+              <img src={Logo} alt="logo" width={50} className={classes.logo}/>
               <Link className={classes.link} to="/">
                 <Button className={classes.menuButton}>Přehled nabídek</Button>
               </Link>
@@ -55,9 +58,7 @@ function App() {
                   <Link className={classes.link} to="/new">
                     <Button className={classes.menuButton}>Vytvořit nabídku</Button>
                   </Link>
-                  <Button className={classes.menuButton} onClick={signOut}>
-                    Odhlásit
-                                </Button>
+                  <Button className={classes.menuButton} onClick={signOut}>Odhlásit</Button>
                 </>
               )}
             </div>
@@ -67,7 +68,7 @@ function App() {
         {user === null && <Redirect to="/login" />}
 
         <main className="App">
-          <Container maxWidth="sm">
+          <Container maxWidth="lg">
             {/* Wait for user session */}
             {user === undefined ? (
               <CircularProgress />
