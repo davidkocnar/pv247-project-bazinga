@@ -1,17 +1,19 @@
 import React from 'react';
 import './App.css';
 import { AppBar, Button, CircularProgress, Container, createMuiTheme, makeStyles, MuiThemeProvider, Toolbar } from '@material-ui/core';
-import { Link, Redirect, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Link, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { signOut, useLoggedInUser } from './firebase/auth';
+import { signOut } from './firebase/auth';
 import Logo from './images/logo.png';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import PersonIcon from '@material-ui/icons/Person';
 
 const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
   menuButton: { marginRight: theme.spacing(2) },
   link: { textDecoration: 'none' },
-  logo: {verticalAlign: 'middle'}
+  logo: { verticalAlign: 'middle', marginRight: theme.spacing(2)}
 }));
 
 // MUI theme override
@@ -41,7 +43,9 @@ function App() {
           {/* Navigation rendered on all pages */}
           <Toolbar className={classes.toolbar}>
             <div>
-              <img src={Logo} alt="logo" width={50} className={classes.logo}/>
+              <Link className={classes.link} to="/">
+                <img src={Logo} alt="logo" width={50} className={classes.logo}/>
+              </Link>
               <Link className={classes.link} to="/">
                 <Button className={classes.menuButton}>Přehled nabídek</Button>
               </Link>
@@ -50,13 +54,13 @@ function App() {
               </Link>
               {user === null && (
                 <Link className={classes.link} to="/login">
-                  <Button className={classes.menuButton}>Přihlásit</Button>
+                  <Button className={classes.menuButton} startIcon={<PersonIcon />}>Přihlásit</Button>
                 </Link>
               )}
               {user && (
                 <>
                   <Link className={classes.link} to="/new">
-                    <Button className={classes.menuButton}>Vytvořit nabídku</Button>
+                    <Button variant="contained" color="secondary" startIcon={<AddCircleIcon />} className={classes.menuButton}>Vložit inzerát</Button>
                   </Link>
                   <Button className={classes.menuButton} onClick={signOut}>Odhlásit</Button>
                 </>
@@ -64,8 +68,6 @@ function App() {
             </div>
           </Toolbar>
         </AppBar>
-
-        {user === null && <Redirect to="/login" />}
 
         <main className="App">
           <Container maxWidth="lg">
@@ -76,10 +78,6 @@ function App() {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
-                  {/* <Route path="/about" exact component={About}/>
-                            <Route path="/users" exact component={Users}/>
-                            <Route path="/review" exact component={ReviewForm}/>
-                            <Route component={Notfound}/> */}
                 </Switch>
               )}
           </Container>

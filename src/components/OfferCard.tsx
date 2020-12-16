@@ -16,11 +16,19 @@ const OfferCard: FC = () =>{
           <img src={NtbImage} alt="NTB" width={200}/>
           <Typography variant="subtitle2">Notebook Lenovo</Typography>
         </CardContent>
-
         <CardActions>
-          <Typography color="textSecondary">
-            15 000 Kč
-          </Typography>
+          <Grid container xs={12}>
+            <Grid item xs={6}>
+              <Typography color="textSecondary" align="left">
+                Brno
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography color="textPrimary" align="right">
+                15 000 Kč
+              </Typography>
+            </Grid>
+          </Grid>
         </CardActions>
       </Card>
     </Grid>
