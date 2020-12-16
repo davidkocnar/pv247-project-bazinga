@@ -4,10 +4,11 @@ import { AppBar, Button, CircularProgress, Container, createMuiTheme, makeStyles
 import { Link, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { signOut } from './firebase/auth';
+import {signOut, useLoggedInUser} from './firebase/auth';
 import Logo from './images/logo.png';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import PersonIcon from '@material-ui/icons/Person';
+import Register from "./pages/Register";
 
 const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
@@ -34,7 +35,7 @@ function App() {
   const classes = useStyles();
 
   // Login state
-  const user = null;
+  const user = useLoggedInUser();
 
   return (
     <MuiThemeProvider theme={ourTheme}>
@@ -52,6 +53,8 @@ function App() {
               <Link className={classes.link} to="/about">
                 <Button className={classes.menuButton}>O službě</Button>
               </Link>
+            </div>
+            <div>
               {user === null && (
                 <Link className={classes.link} to="/login">
                   <Button className={classes.menuButton} startIcon={<PersonIcon />}>Přihlásit</Button>
@@ -78,6 +81,7 @@ function App() {
                 <Switch>
                   <Route path="/" exact component={Home} />
                   <Route path="/login" exact component={Login} />
+                  <Route path="/register" exact component={Register} />
                 </Switch>
               )}
           </Container>

@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
 import firebase from "firebase";
+import {firebaseConfig} from "./config";
+
+firebase.initializeApp(firebaseConfig);
 
 // Hook providing logged in user information
 export const useLoggedInUser = () => {
