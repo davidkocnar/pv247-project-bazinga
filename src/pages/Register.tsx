@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
-import {signIn, signUp, useLoggedInUser} from "../firebase/auth";
+import {signUp, useLoggedInUser} from "../firebase/auth";
 import {Redirect} from 'react-router-dom';
-import {Box, Button, Card, CardActions, CardContent, Link, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Card, CardActions, CardContent, TextField, Typography} from "@material-ui/core";
 
 const Register: FC = () => {
   const [name, setName] = useState('');

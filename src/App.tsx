@@ -1,7 +1,16 @@
 import React from 'react';
 import './App.css';
-import { AppBar, Button, CircularProgress, Container, createMuiTheme, makeStyles, MuiThemeProvider, Toolbar } from '@material-ui/core';
-import { Link, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import {
+  AppBar,
+  Button,
+  CircularProgress,
+  Container,
+  createMuiTheme,
+  makeStyles,
+  MuiThemeProvider,
+  Toolbar
+} from '@material-ui/core';
+import {Link, Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import {signOut, useLoggedInUser} from './firebase/auth';
@@ -14,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
   menuButton: { marginRight: theme.spacing(2) },
   link: { textDecoration: 'none' },
-  logo: { verticalAlign: 'middle', marginRight: theme.spacing(2)}
+  logo: { verticalAlign: 'middle', marginRight: theme.spacing(2) }
 }));
 
 // MUI theme override
@@ -57,13 +66,14 @@ function App() {
             <div>
               {user === null && (
                 <Link className={classes.link} to="/login">
-                  <Button className={classes.menuButton} startIcon={<PersonIcon />}>Přihlásit</Button>
+                  <Button className={classes.menuButton} startIcon={<PersonIcon/>}>Přihlásit</Button>
                 </Link>
               )}
               {user && (
                 <>
                   <Link className={classes.link} to="/new">
-                    <Button variant="contained" color="secondary" startIcon={<AddCircleIcon />} className={classes.menuButton}>Vložit inzerát</Button>
+                    <Button variant="contained" color="secondary" startIcon={<AddCircleIcon/>}
+                            className={classes.menuButton}>Vložit inzerát</Button>
                   </Link>
                   <Button className={classes.menuButton} onClick={signOut}>Odhlásit</Button>
                 </>
@@ -76,14 +86,14 @@ function App() {
           <Container maxWidth="lg">
             {/* Wait for user session */}
             {user === undefined ? (
-              <CircularProgress />
+              <CircularProgress/>
             ) : (
-                <Switch>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/login" exact component={Login} />
-                  <Route path="/register" exact component={Register} />
-                </Switch>
-              )}
+              <Switch>
+                <Route path="/" exact component={Home}/>
+                <Route path="/login" exact component={Login}/>
+                <Route path="/register" exact component={Register}/>
+              </Switch>
+            )}
           </Container>
         </main>
       </Router>
