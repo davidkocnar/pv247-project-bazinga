@@ -17,7 +17,7 @@ const OfferCard: FC = () =>{
           <Typography variant="subtitle2">Notebook Lenovo</Typography>
         </CardContent>
         <CardActions>
-          <Grid container xs={12}>
+          <Grid container>
             <Grid item xs={6}>
               <Typography color="textSecondary" align="left">
                 Brno

@@ -14,10 +14,9 @@ const Home: FC = () => {
   const classes = useStyles();
 
   return (
-
     <Grid container spacing={2} className={classes.marginTop}>
       <Grid item xs={12} lg={12}>
-        <TextField id="searchOfferInp" label="Hledat" variant="outlined" fullWidth />
+        <TextField id="searchOfferInp" label="Hledat..." variant="outlined" fullWidth />
       </Grid>
       <Grid item container xs={12} lg={12} spacing={2}>
         <OfferCard />

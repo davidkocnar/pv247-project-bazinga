@@ -18,6 +18,7 @@ import Logo from './images/logo.png';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import PersonIcon from '@material-ui/icons/Person';
 import Register from "./pages/Register";
+import New from "./pages/New";
 
 const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 const ourTheme = createMuiTheme({
   palette: {
     primary: {
-      main: '#A7BF96',
+      main: '#333333',
     },
     secondary: {
       main: '#2B2D40',
@@ -54,7 +55,7 @@ function App() {
           <Toolbar className={classes.toolbar}>
             <div>
               <Link className={classes.link} to="/">
-                <img src={Logo} alt="logo" width={50} className={classes.logo}/>
+                <img src={Logo} alt="logo" width={80} className={classes.logo}/>
               </Link>
               <Link className={classes.link} to="/">
                 <Button className={classes.menuButton}>Přehled nabídek</Button>
@@ -73,7 +74,7 @@ function App() {
                 <>
                   <Link className={classes.link} to="/new">
                     <Button variant="contained" color="secondary" startIcon={<AddCircleIcon/>}
-                            className={classes.menuButton}>Vložit inzerát</Button>
+                      className={classes.menuButton}>Vložit inzerát</Button>
                   </Link>
                   <Button className={classes.menuButton} onClick={signOut}>Odhlásit</Button>
                 </>
@@ -92,6 +93,7 @@ function App() {
                 <Route path="/" exact component={Home}/>
                 <Route path="/login" exact component={Login}/>
                 <Route path="/register" exact component={Register}/>
+                <Route path="/new" exact component={New}/>
               </Switch>
             )}
           </Container>
