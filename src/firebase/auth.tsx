@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 import firebase from "firebase";
-import {firebaseConfig} from "./config";
+import {initFirebaseApp} from "./config";
+import {saveUserData} from "./firestore";
 
-firebase.initializeApp(firebaseConfig);
+const auth = initFirebaseApp().auth()
 
 // Hook providing logged in user information
 export const useLoggedInUser = () => {
@@ -11,7 +12,7 @@ export const useLoggedInUser = () => {
 
   // Setup onAuthStateChanged once when component is mounted
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(u => setUser(u));
+    const unsubscribe = auth.onAuthStateChanged(u => setUser(u));
 
     // Call unsubscribe in the cleanup of the hook
     return () => unsubscribe();
@@ -21,12 +22,17 @@ export const useLoggedInUser = () => {
 };
 
 // Sign up handler
-export const signUp = (email: string, password: string) =>
-  firebase.auth().createUserWithEmailAndPassword(email, password);
+export const signUp = (email: string, password: string, name: string, surname: string) =>
+  auth.createUserWithEmailAndPassword(email, password)
+    .then((credentials) => {
+      if (credentials.user?.uid) {
+        return saveUserData(name, surname, credentials.user?.uid)
+      }
+    })
 
 // Sign in handler
 export const signIn = (email: string, password: string) =>
-  firebase.auth().signInWithEmailAndPassword(email, password);
+  auth.signInWithEmailAndPassword(email, password);
 
 // Sign out handler
-export const signOut = () => firebase.auth().signOut();
+export const signOut = () => auth.signOut();

@@ -1,14 +1,18 @@
 import firebase from "firebase";
 import { DocumentReference, Timestamp, GeoPoint } from '@firebase/firestore-types';
-import {firebaseConfig} from "./config";
+import {initFirebaseApp} from "./config";
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const db = initFirebaseApp().firestore();
 
-type User = Pick<firebase.User, 'uid' | 'email'>;
+type UserRef = Pick<firebase.User, 'uid' | 'email'>;
+
+export type User = {
+    name: string,
+    surname: string
+}
 
 export type Offer = {
-    user_ref: User;
+    user_ref: UserRef;
     title: string;
     description: string;
     created: Timestamp,
@@ -24,3 +28,13 @@ export type Category = {
 export const offersCollection = db.collection(
   'offer',
 ) as firebase.firestore.CollectionReference<Offer>;
+
+export const usersCollection = db.collection(
+  'user',
+) as firebase.firestore.CollectionReference<User>;
+
+export const saveUserData = (name: string, surname: string, uid: string) =>
+  usersCollection.doc(uid).set({
+      name,
+      surname
+  })

@@ -5,6 +5,7 @@ import {Box, Button, Card, CardActions, CardContent, TextField, Typography} from
 
 const Register: FC = () => {
   const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -26,13 +27,23 @@ const Register: FC = () => {
           <Typography variant="subtitle1">Vytvořte si nový účet a užívejte si Bazingu s námi.</Typography>
           <TextField
             label="Jméno"
-            type="name"
+            type="text"
             name="name"
             fullWidth
             margin="normal"
             variant="outlined"
             value={name}
             onChange={e => setName(e.target.value)}
+          />
+          <TextField
+            label="Příjmení"
+            type="text"
+            name="surname"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            value={surname}
+            onChange={e => setSurname(e.target.value)}
           />
           <TextField
             label="E-mail"
@@ -67,12 +78,11 @@ const Register: FC = () => {
             size="large"
             color="primary"
             // Handling promise with async/await
-            onClick={async () => {
-              try {
-                await signUp(email, password);
-              } catch (err) {
-                setError(err.message);
-              }
+            onClick={() => {
+              signUp(email, password, name, surname)
+                .catch((error) => {
+                  setError(error.message);
+                })
             }}
           >
             Vytvořit účet
