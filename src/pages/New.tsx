@@ -6,9 +6,6 @@ import { Button, Typography } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles({
-  marginTop: {
-    marginTop: 20,
-  },
   input: {
     display: 'none',
   },
@@ -18,12 +15,12 @@ const New: FC = () => {
   const classes = useStyles();
 
   return(
-    <Grid container spacing={2} className={classes.marginTop} alignContent="center" alignItems="center">
+    <Grid container spacing={2} alignContent="center" alignItems="center">
       <Grid item xs={12}>
         <Typography variant="h4">Vložit inzerát</Typography>
       </Grid>
 
-      <Grid item xs={6} lg={6} className={classes.marginTop}>
+      <Grid item xs={6} lg={6} >
         <input
           accept="image/*"
           className={classes.input}
