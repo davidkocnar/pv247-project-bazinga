@@ -5,7 +5,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
-    margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) }
+    margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
+    link: { textDecoration: 'none' }
 }));
 
 const Detail: FC = () => {
@@ -25,7 +26,7 @@ const Detail: FC = () => {
     return (
         <>
             <Grid container justify="flex-start">
-                <Link to="/">
+                <Link className={classes.link} to="/">
                     <Button startIcon={<ArrowBackIosIcon />}>{name}</Button>
                 </Link>
             </Grid>
