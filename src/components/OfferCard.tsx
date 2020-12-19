@@ -5,17 +5,15 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Grid from '@material-ui/core/Grid';
-import NtbImage from '../images/ntb1.jpg';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
+import {Offer} from '../firebase/firestore';
 
 const useStyles = makeStyles(theme => ({
   link: { textDecoration: 'none' }
 }));
 
-const OfferCard: FC = () => {
-
-  // Styles
+const OfferCard: FC<Pick<Offer, "price" | "imgPath" | "title">> = ({price, imgPath, title}) => {
   const classes = useStyles();
 
   return (
@@ -23,19 +21,19 @@ const OfferCard: FC = () => {
       <Link className={classes.link} to="detail">
         <Card>
           <CardContent>
-            <img src={NtbImage} alt="NTB" width={200} />
-            <Typography variant="subtitle2">Notebook Lenovo</Typography>
+            <img src={imgPath} alt="NTB" height={170} />
+            <Typography variant="subtitle2">{title}</Typography>
           </CardContent>
           <CardActions>
             <Grid container>
               <Grid item xs={6}>
                 <Typography color="textSecondary" align="left">
-                  Brno
+                  {"Brno"}
               </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography color="textPrimary" align="right">
-                  15 000 Kč
+                  {price} Kč
               </Typography>
               </Grid>
             </Grid>

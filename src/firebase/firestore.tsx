@@ -12,18 +12,23 @@ export type User = {
 }
 
 export type Offer = {
-    user_ref: UserRef;
+    userRef: UserRef;
+    imgPath?: string;
     title: string;
     description: string;
+    price: string,
     created: Timestamp,
-    category_ref: DocumentReference,
-    type: number,
-    location: GeoPoint
+    category_ref?: DocumentReference,
+    type?: number,
+    location?: GeoPoint,
+    phone: string
 };
 
 export type Category = {
     name: string;
 };
+
+export const timestampNow = firebase.firestore.Timestamp.now;
 
 export const offersCollection = db.collection(
   'offer',
@@ -32,6 +37,8 @@ export const offersCollection = db.collection(
 export const usersCollection = db.collection(
   'user',
 ) as firebase.firestore.CollectionReference<User>;
+
+export const fileStorage = firebase.storage().ref()
 
 export const saveUserData = (name: string, surname: string, uid: string) =>
   usersCollection.doc(uid).set({
