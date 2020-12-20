@@ -20,7 +20,7 @@ export type Offer = {
   description: string;
   price: string,
   created: Timestamp,
-  category_ref?: DocumentReference,
+  categoryRef?: DocumentReference,
   type?: number,
   location?: GeoPoint,
   phone: string

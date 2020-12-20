@@ -58,7 +58,7 @@ const Profile: FC = () => {
                   {offers.map((offer) => (
                     <OfferCard
                       price={offer.price}
-                      imgPath={offer.imgPath}
+                      imgPaths={offer.imgPaths}
                       title={offer.title}
                     />
                   ))}
