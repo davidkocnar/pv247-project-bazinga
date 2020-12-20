@@ -11,6 +11,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import Autocomplete, {AutocompleteRenderInputParams} from "@material-ui/lab/Autocomplete";
 import {useForm, Controller} from "react-hook-form";
 
 export type RegisterData = {
@@ -35,8 +36,10 @@ const Register: FC = () => {
   };
 
   const [error, setError] = useState<string>();
-
   const isLoggedIn = useLoggedInUser();
+  const locations: string[] = [
+    "Brno", "Praha", "Ostrava"
+  ]
 
   if (isLoggedIn) {
     return <Redirect to="/"/>;
@@ -50,7 +53,7 @@ const Register: FC = () => {
             <Typography variant="h5" component="h1">
               Registrace
             </Typography>
-            <Typography variant="subtitle1" style={{marginBottom: "1rem"}}>
+            <Typography variant="subtitle1" style={{ marginBottom: "1rem" }}>
               Vytvořte si nový účet a užívejte si Bazingu s námi.
             </Typography>
 
@@ -96,18 +99,28 @@ const Register: FC = () => {
 
             <Controller
               name="location"
-              as={
-                <TextField
-                  label="Poloha"
-                  type="text"
-                  name="location"
+              render={({ onChange, ...props }) => (
+                <Autocomplete
+                  id="location"
+                  options={locations}
                   fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={fieldErrors.location ? fieldErrors.location.message : null}
-                  error={fieldErrors.location !== undefined}
+                  onChange={(e, data) => onChange(data)}
+                  renderInput={(params: AutocompleteRenderInputParams) =>
+                    <TextField
+                      {...params}
+                      label="Poloha"
+                      type="text"
+                      name="location"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      helperText={fieldErrors.location ? fieldErrors.location.message : null}
+                      error={fieldErrors.location !== undefined}
+                    />
+                  }
                 />
-              }
+              )}
+              onChange={([, data]: string[]) => data}
               control={control}
               defaultValue=""
               rules={{
@@ -134,7 +147,7 @@ const Register: FC = () => {
               rules={{}}
             />
 
-            <Divider style={{margin: "1.5rem 1rem 1rem 1rem"}}/>
+            <Divider style={{ margin: "1.5rem 1rem 1rem 1rem" }}/>
 
             <Controller
               name="email"
