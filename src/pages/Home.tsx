@@ -4,21 +4,17 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { Offer, offersCollection } from '../firebase/firestore';
 
+type Offers = Record<string, Offer>;
+
 const Home: FC = () => {
 
-  const [offers, setOffers] = useState<Offer[]>([]);
+  const [offers, setOffers] = useState<Offers>({});
 
   useEffect(() => {
-    (async () => {
-      try {
-        const data = await offersCollection.get();
-        setOffers(data.docs.map(doc => doc.data()));
-      }
-      catch (error) {
-        console.error(error);
-      }
-    })()
-  },[])
+    offersCollection.get().then(querySnapshot => {
+      setOffers(querySnapshot.docs.reduce((previousValue, currentValue) => ({ ...previousValue, [currentValue.id]: currentValue.data() }), {}))
+    }).catch(error => console.error(error));
+  }, [])
 
   return (
     <Grid container spacing={2} >
@@ -26,15 +22,16 @@ const Home: FC = () => {
         <TextField id="searchOfferInp" label="Hledat..." variant="outlined" fullWidth />
       </Grid>
       <Grid item container xs={12} lg={12} spacing={2}>
-
-        {offers.map((offer) => (
-          <OfferCard
+        {Object.keys(offers).map(key => {
+          const offer = offers[key];
+          return (<OfferCard
             price={offer.price}
             imgPaths={offer.imgPaths}
             title={offer.title}
-          />
-        ))}
-
+            id={key}
+            key={key}
+          />);
+        })}
       </Grid>
     </Grid>
   )

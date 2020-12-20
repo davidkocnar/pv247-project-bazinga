@@ -104,7 +104,7 @@ function App() {
                 <Route path="/login" exact component={Login}/>
                 <Route path="/register" exact component={Register}/>
                 <Route path="/new" exact component={New}/>
-                <Route path="/detail" component={Detail}/>
+                <Route path="/detail/:itemId" component={Detail} />
                 <Route path="/profile" component={Profile}/>
               </Switch>
             )}
