@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   link: { textDecoration: 'none' }
 }));
 
-const OfferCard: FC<Pick<Offer, "price" | "imgPath" | "title">> = ({price, imgPath, title}) => {
+const OfferCard: FC<Pick<Offer, "price" | "imgPaths" | "title">> = ({price, imgPaths, title}) => {
   const classes = useStyles();
 
   return (
@@ -21,14 +21,14 @@ const OfferCard: FC<Pick<Offer, "price" | "imgPath" | "title">> = ({price, imgPa
       <Link className={classes.link} to="detail">
         <Card>
           <CardContent>
-            <img src={imgPath} alt="NTB" height={170} />
+            <img src={imgPaths ? imgPaths[0] : ""} alt="NTB" height={170} />
             <Typography variant="subtitle2">{title}</Typography>
           </CardContent>
           <CardActions>
             <Grid container>
               <Grid item xs={6}>
                 <Typography color="textSecondary" align="left">
-                  {"Brno"}
+                  {/*location*/}
               </Typography>
               </Grid>
               <Grid item xs={6}>

@@ -15,7 +15,7 @@ export type UserData = {
 
 export type Offer = {
   userRef: UserRef;
-  imgPath?: string;
+  imgPaths: string[];
   title: string;
   description: string;
   price: string,
@@ -39,6 +39,10 @@ export const offersCollection = db.collection(
 export const usersCollection = db.collection(
   'user',
 ) as firebase.firestore.CollectionReference<UserData>;
+
+export const categoriesCollection = db.collection(
+  'category',
+) as firebase.firestore.CollectionReference<Category>;
 
 export const fileStorage = firebase.storage().ref()
 

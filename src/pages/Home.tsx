@@ -30,7 +30,7 @@ const Home: FC = () => {
         {offers.map((offer) => (
           <OfferCard
             price={offer.price}
-            imgPath={offer.imgPath}
+            imgPaths={offer.imgPaths}
             title={offer.title}
           />
         ))}
