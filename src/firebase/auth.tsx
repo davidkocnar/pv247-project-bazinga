@@ -22,11 +22,11 @@ export const useLoggedInUser = () => {
 };
 
 // Sign up handler
-export const signUp = (email: string, password: string, name: string, surname: string) =>
+export const signUp = (email: string, password: string, name: string, surname: string | undefined, location: string, phone: string | undefined) =>
   auth.createUserWithEmailAndPassword(email, password)
     .then((credentials) => {
       if (credentials.user?.uid) {
-        return saveUserData(name, surname, credentials.user?.uid)
+        return saveUserData(name, surname, location, phone, credentials.user?.uid)
       }
     })
 

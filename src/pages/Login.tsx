@@ -24,7 +24,6 @@ const Login: FC = () => {
               <Typography variant="h5" component="h1">
                 Přihlášení
               </Typography>
-              <Typography variant="subtitle1"></Typography>
               <TextField
                 label="E-mail"
                 type="email"
@@ -59,7 +58,7 @@ const Login: FC = () => {
             </CardContent>
             <CardActions>
               <Button
-                variant="text"
+                variant="contained"
                 size="large"
                 color="primary"
                 // Handling promise with chained handlers
@@ -78,11 +77,12 @@ const Login: FC = () => {
           <CardContent>
             <Typography variant="h6">Nemáte ještě účet?</Typography>
             <Typography variant="body1">Přidejte se k ostatním a sdílejte věci s příběhem.</Typography>
-            <Link to="/register">
+            <Link to="/register" style={{textDecoration: "none"}}>
               <Button
-                variant="text"
+                variant="contained"
                 size="large"
-                color="primary">
+                color="primary"
+                style={{marginTop: "1rem"}}>
                 Vytvořit účet
               </Button>
             </Link>
