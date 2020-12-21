@@ -92,10 +92,10 @@ const Detail: FC<RouteComponentProps<DetailParamProps>> = (props: RouteComponent
               <BasicInfoRow title={"Prodávající:"} content={user ? user.name + ' ' + user.surname : 'Nespecifikován'} />
               {loggedInUser &&
                 <>
-                  <BasicInfoRow title={"e-mail:"} content={offer?.userRef.email ? offer.userRef.email : 'Nespecifikován'} />
-                  <BasicInfoRow title={"tel:"} content={user?.phone ? user.phone : 'Nespecifikován'} />
+                  <BasicInfoRow title={"E-mail:"} content={offer?.userRef.email ? offer.userRef.email : 'Nespecifikován'} />
+                  <BasicInfoRow title={"Telefon:"} content={user?.phone ? user.phone : 'Nespecifikován'} />
                 </>}
-              <BasicInfoRow title={"místo:"} content={user ? user.location : 'Nespecifikováno'} />
+              <BasicInfoRow title={"Místo:"} content={user ? user.location : 'Nespecifikováno'} />
             </Grid>
             <Grid container alignItems="center" justify="center" className={classes.margin}>
               {offer?.userRef.email && loggedInUser &&
