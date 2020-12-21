@@ -29,7 +29,6 @@ const Register: FC = () => {
   const { control, handleSubmit, errors: fieldErrors } = useForm<RegisterData>();
 
   const onSubmit = (data: RegisterData) => {
-    console.log(data);
     signUp(data.email, data.password, data.name, data.surname, data.location, data.phone)
       .catch((error) => {
         setError(error.message);

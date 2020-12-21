@@ -18,10 +18,10 @@ const About: FC = () => {
           </Typography>
           <Grid container spacing={2} justify="center" style={{marginTop: "3rem"}}>
             <Grid item md={6}>
-              <img src={imageAbout1} alt={"světýlka"} style={{width: "100%"}}/>
+              <img src={imageAbout1} alt="světýlka" style={{width: "100%"}}/>
             </Grid>
             <Grid item md={6}>
-              <img src={imageAbout2} alt={"kokos"} style={{width: "100%"}}/>
+              <img src={imageAbout2} alt="kokos" style={{width: "100%"}}/>
             </Grid>
           </Grid>
         </Box>

@@ -15,14 +15,11 @@ import {Redirect} from 'react-router';
 import {DropzoneArea} from 'material-ui-dropzone';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useForm, Controller} from "react-hook-form";
-import Autocomplete, {AutocompleteRenderInputParams} from "@material-ui/lab/Autocomplete";
-import cities from "../data/cz-cities-csu.json";
 
 type OfferFormData = {
   title: string;
   description: string;
   price: string,
-  location: string,
   category: string,
   email: string;
   phone: string
@@ -48,9 +45,6 @@ const New: FC = () => {
   const [availableCategories, setAvailableCategories] = useState<Category[]>([])
   const [error, setError] = useState<string>();
   const { control, handleSubmit, errors: fieldErrors } = useForm<OfferFormData>();
-  const locations: string[] = cities.cz.map((item) => {
-    return item.name
-  })
 
   const user = useLoggedInUser();
 
@@ -224,40 +218,6 @@ const New: FC = () => {
                   value: /^[0-9]{1,9}$/i,
                   message: 'Špatný formát ceny'
                 }
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} lg={7}>
-            <Controller
-              name="location"
-              render={({ onChange }) => (
-                <Autocomplete
-                  id="location"
-                  options={locations}
-                  fullWidth
-                  getOptionLabel={(item) => item}
-                  onChange={(e, data) => onChange(data)}
-                  renderInput={(params: AutocompleteRenderInputParams) =>
-                    <TextField
-                      {...params}
-                      label="Poloha"
-                      type="text"
-                      name="location"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      helperText={fieldErrors.location ? fieldErrors.location.message : null}
-                      error={fieldErrors.location !== undefined}
-                    />
-                  }
-                />
-              )}
-              onChange={([, data]: string[]) => data}
-              control={control}
-              defaultValue=""
-              rules={{
-                required: 'Vyberte město'
               }}
             />
           </Grid>
