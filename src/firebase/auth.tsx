@@ -36,3 +36,7 @@ export const signIn = (email: string, password: string) =>
 
 // Sign out handler
 export const signOut = () => auth.signOut();
+
+// Forgot password
+export const resetPassword = (email: string) =>
+  auth.sendPasswordResetEmail(email)
