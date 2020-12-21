@@ -44,6 +44,17 @@ const ourTheme = createMuiTheme({
       default: '#e0e0e0'
     }
   },
+  typography: {
+    h3: {
+      marginBottom: "1rem"
+    },
+    h5: {
+      marginBottom: "0.5rem"
+    },
+    subtitle1: {
+      marginBottom: "1rem"
+    }
+  }
 });
 
 function App() {
