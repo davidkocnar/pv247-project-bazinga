@@ -1,12 +1,13 @@
-import { Button, CircularProgress, Grid, GridList, GridListTile, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import { Button, CircularProgress, Grid, GridList, GridListTile, makeStyles, Typography } from '@material-ui/core';
+import React, { FC, useMemo, useState } from 'react';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { Offer, offersCollection, UserData, usersCollection, Category, categoriesCollection } from '../firebase/firestore';
+import { Offer, offersCollection, UserData, usersCollection } from '../firebase/firestore';
 import Logo from '../images/logo.png';
 import { useLoggedInUser } from '../firebase/auth';
-import { Controller, useForm } from 'react-hook-form';
-import { OfferFormData } from './New';
+import BasicInfoRow from '../components/BasicInfoRow';
+import OfferEdit from '../components/OfferEdit';
+import OfferInfo from '../components/OfferInfo';
 
 const useStyles = makeStyles(theme => ({
   margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
@@ -22,10 +23,6 @@ const useStyles = makeStyles(theme => ({
   },
   img: { height: "100%", width: 'auto' }
 }));
-
-const numberWithSpaces = (x: number) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-}
 
 interface DetailParamProps {
   itemId: string
@@ -124,127 +121,6 @@ const Detail: FC<RouteComponentProps<DetailParamProps>> = (props: RouteComponent
   } else {
     return (<CircularProgress color="secondary" />);
   }
-}
-
-const OfferInfo: FC<{ offer: Offer }> = ({ offer }) => {
-  return (
-    <Grid item xs={10} md={5} >
-      <Typography variant="h5" align="left">Cena: {numberWithSpaces(parseFloat(offer.price || '0'))} Kč</Typography>
-      <Typography variant="h6" align="left" style={{ marginTop: "1rem" }}>Vloženo: {offer.created.toDate().toLocaleDateString('cs')}</Typography>
-      <Typography variant="subtitle2" align="left" style={{ marginTop: "3rem" }}>{offer.description}</Typography>
-    </Grid>
-  );
-}
-
-const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, itemId: string }> = ({ offer, closeUpdate, itemId }) => {
-  const { control, handleSubmit, errors: fieldErrors } = useForm<OfferFormData>();
-  const [availableCategories, setAvailableCategories] = useState<Category[]>([])
-  const [currentCategory, setCurrentCategory] = useState<Category>();
-
-  useEffect(() => {
-    categoriesCollection.get().then(querySnapshot => {
-      setAvailableCategories(querySnapshot.docs.map(doc => doc.data()))
-    })
-    categoriesCollection.doc(offer.categoryRef?.id).get().then(querySnapshot => {
-      setCurrentCategory(querySnapshot.data());
-    })
-  }, [offer.categoryRef?.id])
-
-  const onSubmit = (data: OfferFormData) => {
-    console.log(data.category);
-    categoriesCollection.where("name", "==", data.category).get().then(querySnapshot => {
-      const newOffer = {
-        ...offer,
-        title: data.title,
-        price: data.price,
-        description: data.description,
-        categoryRef: querySnapshot.docs.map(doc => doc.ref)[0]
-      }
-      console.log(querySnapshot.docs.map(doc => doc.ref)[0])
-      console.log(offer.categoryRef)
-      offersCollection.doc(itemId).update(newOffer).then(() => closeUpdate(newOffer));
-    });
-  }
-
-  return (
-    <Grid item xs={10} md={5}>
-      {currentCategory ? <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-        <Grid container justify="center" spacing={2}>
-          <Grid item xs={12}>
-            <Controller
-              name="title"
-              as={<TextField label="Název" variant="outlined" fullWidth helperText={fieldErrors.title ? fieldErrors.title.message : null} error={fieldErrors.title !== undefined} />}
-              control={control}
-              defaultValue={offer.title}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="price"
-              as={<TextField label="Cena" variant="outlined" fullWidth helperText={fieldErrors.title ? fieldErrors.title.message : null} error={fieldErrors.title !== undefined} />}
-              control={control}
-              defaultValue={offer.price}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="category"
-              as={
-                <TextField label="Kategorie" variant="outlined" fullWidth select helperText={fieldErrors.category ? fieldErrors.category.message : null} error={fieldErrors.category !== undefined}>
-                  {availableCategories.map((category, i) => (
-                    <MenuItem key={i} value={category.name}>
-                      {category.name}
-                    </MenuItem>))}
-                </TextField>
-              }
-              control={control}
-              defaultValue={currentCategory.name}
-              rules={{
-                required: 'Vyberte kategorii prodávaného produktu'
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="description"
-              as={
-                <TextField label="Detaily" variant="outlined" fullWidth multiline rows={8} rowsMax={8} helperText={fieldErrors.description ? fieldErrors.description.message : null} error={fieldErrors.description !== undefined} />
-              }
-              control={control}
-              defaultValue={offer.description}
-              rules={{}}
-            />
-          </Grid>
-          <Grid item xs={5}>
-            <Button color="default" fullWidth onClick={() => closeUpdate(offer)} size="large" variant="contained" style={{ marginBottom: "3rem" }}>
-              Zrušit
-            </Button>
-          </Grid>
-          <Grid item xs={5}>
-            <Button color="primary" fullWidth type="submit" size="large" variant="contained" style={{ marginBottom: "3rem" }}>
-              Aktualizovat inzerát
-            </Button>
-          </Grid>
-        </Grid>
-      </form> : <CircularProgress color="secondary" />}
-    </Grid>
-  );
-}
-
-const BasicInfoRow: FC<{ title: string, content: string }> = ({ title, content }) => {
-
-  const variant = "subtitle2";
-
-  return (
-    <>
-      <Grid item xs={12} sm={4} md={3}>
-        <Typography variant={variant} align="right">{title}</Typography>
-      </Grid>
-      <Grid item xs={12} sm={8} md={9}>
-        <Typography variant={variant} align="left">{content}</Typography>
-      </Grid>
-    </>
-  );
 }
 
 export default Detail;
