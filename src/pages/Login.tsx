@@ -93,8 +93,7 @@ const Login: FC = () => {
               <Button
                 variant="contained"
                 size="large"
-                color="primary"
-                style={{ marginTop: "1rem" }}>
+                color="primary">
                 Vytvořit účet
               </Button>
             </Link>

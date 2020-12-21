@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom';
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Divider, Grid,
   TextField,
@@ -56,7 +55,7 @@ const Register: FC = () => {
                 Registrace
               </Typography>
               <Typography variant="subtitle1">
-                Vytvořte si nový účet a užívejte si Bazingu s námi.
+                Vyplňte údaje a užívejte si Bazingu s námi.
               </Typography>
 
               <Controller
@@ -203,8 +202,7 @@ const Register: FC = () => {
                   <b>{error}</b>
                 </Typography>
               )}
-            </CardContent>
-            <CardActions>
+
               <Button
                 variant="contained"
                 size="large"
@@ -212,7 +210,7 @@ const Register: FC = () => {
                 type="submit">
                 Vytvořit účet
               </Button>
-            </CardActions>
+            </CardContent>
           </Card>
         </form>
       </Grid>

@@ -28,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
   margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
   marginTop: { marginTop: theme.spacing(4) },
-  menuButton: { marginRight: theme.spacing(2) },
+  menuButton: { marginRight: theme.spacing(2), marginTop: "0" },
   link: { textDecoration: 'none' },
   divider: { margin: "1.5rem 1rem 1rem 1rem" },
   logo: { verticalAlign: 'middle', marginRight: theme.spacing(2) }
@@ -63,6 +63,9 @@ const ourTheme = createMuiTheme({
     body1: {
       marginTop: "0.2rem",
       marginBottom: "0.2rem"
+    },
+    button: {
+      marginTop: "1rem"
     }
   }
 });
