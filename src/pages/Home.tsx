@@ -28,7 +28,7 @@ const Home: FC = () => {
   return (
       <Grid container spacing={2} >
         <Grid item xs={12} sm={4}>
-          <FormControl fullWidth variant="outlined" /*className={classes.formControl}*/>
+          <FormControl fullWidth variant="outlined">
             <InputLabel htmlFor="outlined-age-native-simple">Kategorie</InputLabel>
             <Select
               native
