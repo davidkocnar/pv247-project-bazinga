@@ -16,7 +16,7 @@ import {DropzoneArea} from 'material-ui-dropzone';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useForm, Controller} from "react-hook-form";
 
-type OfferFormData = {
+export type OfferFormData = {
   title: string;
   description: string;
   price: string,
