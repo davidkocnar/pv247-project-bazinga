@@ -97,12 +97,11 @@ const Detail: FC<RouteComponentProps<DetailParamProps>> = (props: RouteComponent
               <BasicInfoRow title={"tel:"} content={user?.phone ? user.phone : 'Nespecifikován'} />
               <BasicInfoRow title={"místo:"} content={user ? user.location : 'Nespecifikováno'} />
             </Grid>
-            <Grid container alignItems="center" justify="center">
+            <Grid container alignItems="center" justify="center" className={classes.margin}>
               {offer?.userRef.email &&
                 <Grid item xs={4}>
-                  <a className={classes.link} href={`mailto:${offer?.userRef.email}`}>
-                    <Button className={classes.margin} color="secondary" variant="contained">Kontaktovat</Button>
-                  </a>
+                  <Button href={`mailto:${offer?.userRef.email}`}
+                    color="secondary" variant="contained">Kontaktovat</Button>
                 </Grid>}
               {loggedInUser && offer.userRef.uid === loggedInUser.uid &&
                 <>

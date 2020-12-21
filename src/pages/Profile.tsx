@@ -14,7 +14,6 @@ const Profile: FC = () => {
   const user = useLoggedInUser();
   const [userData, setUserData] = useState<UserData>();
   const [offers, setOffers] = useState<Offers>({});
-  const classes = useStyles();
 
   useEffect(() => {
     (async () => {
@@ -39,9 +38,11 @@ const Profile: FC = () => {
     })()
   }, [user])
 
+  const classes = useStyles();
+
   return (
     <Grid container spacing={2} justify="center">
-      <Grid item xs={12} lg={10}>
+      <Grid item xs={12}>
         {userData === undefined && offers === undefined ? (
           <Box mt="5rem"><CircularProgress/></Box>
         ) : (
