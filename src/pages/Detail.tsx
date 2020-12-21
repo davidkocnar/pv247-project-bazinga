@@ -150,7 +150,7 @@ const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, item
     <Grid item xs={10} md={5}>
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
         <Grid container justify="center" spacing={2}>
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12}>
             <Controller
               name="price"
               as={<TextField label="Cena" variant="outlined" fullWidth helperText={fieldErrors.title ? fieldErrors.title.message : null} error={fieldErrors.title !== undefined} />}
@@ -158,7 +158,7 @@ const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, item
               defaultValue={offer.price}
             />
           </Grid>
-          <Grid item xs={12} lg={7}>
+          <Grid item xs={12}>
             <Controller
               name="description"
               as={
