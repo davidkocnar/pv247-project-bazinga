@@ -11,8 +11,13 @@ import {Offer} from '../firebase/firestore';
 import Logo from '../images/logo.png';
 
 const useStyles = makeStyles(theme => ({
-  link: { textDecoration: 'none' }
+  link: { textDecoration: 'none' },
+  boldText: {fontWeight: "bold"}
 }));
+
+const beautifyNumString = (x: string) => {
+  return x.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
 
 interface OfferCardProps extends Pick<Offer, "price" | "imgPaths" | "title"> {
   id: string
@@ -26,19 +31,16 @@ const OfferCard: FC<OfferCardProps> = ({price, imgPaths, title, id}) => {
       <Link className={classes.link} to={`/detail/${id}`}>
         <Card>
           <CardContent>
-            <img src={imgPaths ? imgPaths[0] : Logo} alt="NTB" height={170} />
-            <Typography variant="subtitle2">{title}</Typography>
+            <img src={imgPaths ? imgPaths[0] : Logo} alt="NTB" height={150}/>
+            <Typography color="primary" variant="subtitle2" className={classes.boldText}>
+              {title}
+            </Typography>
           </CardContent>
           <CardActions>
             <Grid container>
-              <Grid item xs={6}>
-                <Typography color="textSecondary" align="left">
-                  {/*location*/}
-              </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography color="textPrimary" align="right">
-                  {price} Kč
+              <Grid item xs={12}>
+                <Typography color="textPrimary" align="right" className={classes.boldText}>
+                  {beautifyNumString(price)} Kč
               </Typography>
               </Grid>
             </Grid>

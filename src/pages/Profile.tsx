@@ -28,7 +28,6 @@ const Profile: FC = () => {
           .where("userRef", "==", { uid: user.uid, email: user.email })
           .get()
           .then((snapshot) => {
-            console.log("OFFERS", snapshot.docs.map(doc => doc.data()));
             setOffers(snapshot.docs.reduce((previousValue, currentValue) => ({ ...previousValue, [currentValue.id]: currentValue.data() }), {}))
           })
       }

@@ -53,6 +53,7 @@ const New: FC = () => {
       const categoryDocs = await categoriesCollection
         .where("name", "==", data.category)
         .get();
+
       const categoryRef = categoryDocs.docs.map(doc => doc.ref)[0];
 
       try {
@@ -66,7 +67,6 @@ const New: FC = () => {
           description: data.description,
           price: data.price,
           created: timestampNow(),
-          phone: data.phone,
           categoryRef: categoryRef
         });
         setRedirect(true);
@@ -106,8 +106,8 @@ const New: FC = () => {
 
   const classes = useStyles();
 
-  if (redirect) {
-    return <Redirect to="/"/>
+  if(redirect){
+    return <Redirect to="/profile"/>
   }
 
   return (
@@ -135,12 +135,13 @@ const New: FC = () => {
             <Controller
               name="title"
               as={
-                <TextField className={classes.offerInput}
-                           label="Co prodáváte? (max. 60 znaků)"
-                           variant="outlined"
-                           fullWidth
-                           helperText={fieldErrors.title ? fieldErrors.title.message : null}
-                           error={fieldErrors.title !== undefined}
+                <TextField
+                  className={classes.offerInput}
+                  label="Co prodáváte? (max. 60 znaků)"
+                  variant="outlined"
+                  fullWidth
+                  helperText={fieldErrors.title ? fieldErrors.title.message : null}
+                  error={fieldErrors.title !== undefined}
                 />
               }
               control={control}
@@ -155,15 +156,16 @@ const New: FC = () => {
             <Controller
               name="description"
               as={
-                <TextField className={classes.offerInput}
-                           label="Detaily (max. 1 000 znaků) (nepovinné)"
-                           variant="outlined"
-                           fullWidth
-                           multiline
-                           rows={8}
-                           rowsMax={8}
-                           helperText={fieldErrors.description ? fieldErrors.description.message : null}
-                           error={fieldErrors.description !== undefined}
+                <TextField
+                  className={classes.offerInput}
+                  label="Detaily (max. 1 000 znaků) (nepovinné)"
+                  variant="outlined"
+                  fullWidth
+                  multiline
+                  rows={8}
+                  rowsMax={8}
+                  helperText={fieldErrors.description ? fieldErrors.description.message : null}
+                  error={fieldErrors.description !== undefined}
                 />
               }
               control={control}
@@ -176,13 +178,14 @@ const New: FC = () => {
             <Controller
               name="category"
               as={
-                <TextField className={classes.offerInput}
-                           label="Vyberte kategorii"
-                           variant="outlined"
-                           fullWidth
-                           select
-                           helperText={fieldErrors.category ? fieldErrors.category.message : null}
-                           error={fieldErrors.category !== undefined}
+                <TextField
+                  className={classes.offerInput}
+                  label="Vyberte kategorii"
+                  variant="outlined"
+                  fullWidth
+                  select
+                  helperText={fieldErrors.category ? fieldErrors.category.message : null}
+                  error={fieldErrors.category !== undefined}
                 >
                   {availableCategories.map((category, i) => (
                     <MenuItem key={i} value={category.name}>
@@ -202,12 +205,13 @@ const New: FC = () => {
             <Controller
               name="price"
               as={
-                <TextField className={classes.offerInput}
-                           label="Cena"
-                           variant="outlined"
-                           fullWidth
-                           helperText={fieldErrors.price ? fieldErrors.price.message : null}
-                           error={fieldErrors.price !== undefined}
+                <TextField
+                  className={classes.offerInput}
+                  label="Cena"
+                  variant="outlined"
+                  fullWidth
+                  helperText={fieldErrors.price ? fieldErrors.price.message : null}
+                  error={fieldErrors.price !== undefined}
                 />
               }
               control={control}
@@ -219,49 +223,6 @@ const New: FC = () => {
                   message: 'Špatný formát ceny'
                 }
               }}
-            />
-          </Grid>
-
-          <Grid item xs={12} lg={7}>
-            <Controller
-              name="email"
-              as={
-                <TextField className={classes.offerInput}
-                           label="E-mail"
-                           variant="outlined"
-                           value={user?.email ?? ""}
-                           fullWidth
-                           helperText={fieldErrors.email ? fieldErrors.email.message : null}
-                           error={fieldErrors.email !== undefined}
-                />
-              }
-              control={control}
-              defaultValue={user?.email ?? ""}
-              rules={{
-                required: 'Vyplňte kontaktní e-mail',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Špatný formát e-mailové adresy'
-                }
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} lg={7}>
-            <Controller
-              name="phone"
-              as={
-                <TextField className={classes.offerInput}
-                           label="Telefon (nepovinné)"
-                           variant="outlined"
-                           fullWidth
-                           helperText={fieldErrors.phone ? fieldErrors.phone.message : null}
-                           error={fieldErrors.phone !== undefined}
-                />
-              }
-              control={control}
-              defaultValue=""
-              rules={{}}
             />
           </Grid>
 

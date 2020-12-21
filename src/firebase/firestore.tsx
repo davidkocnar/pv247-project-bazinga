@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import {DocumentReference, Timestamp, GeoPoint} from '@firebase/firestore-types';
+import {DocumentReference, Timestamp} from '@firebase/firestore-types';
 import {initFirebaseApp} from "./config";
 
 const db = initFirebaseApp().firestore();
@@ -21,9 +21,6 @@ export type Offer = {
   price: string,
   created: Timestamp,
   categoryRef?: DocumentReference,
-  type?: number,
-  location?: GeoPoint,
-  phone: string
 };
 
 export type Category = {
