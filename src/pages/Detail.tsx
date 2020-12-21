@@ -109,8 +109,8 @@ const Detail: FC<RouteComponentProps<DetailParamProps>> = (props: RouteComponent
           </Grid>
           <Grid item xs={10} md={5} >
             <Typography variant="h5" align="left">Cena: {numberWithSpaces(parseFloat(offer?.price || '0'))} Kč</Typography>
-            <Typography variant="h6" align="left">Vloženo: {offer?.created.toDate().toLocaleDateString('cs')}</Typography>
-            <Typography variant="subtitle2" align="left">{offer?.description}</Typography>
+            <Typography variant="h6" align="left" style={{marginTop: "1rem"}}>Vloženo: {offer?.created.toDate().toLocaleDateString('cs')}</Typography>
+            <Typography variant="subtitle2" align="left" style={{marginTop: "3rem"}}>{offer?.description}</Typography>
           </Grid>
         </Grid >
       </>

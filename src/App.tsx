@@ -21,6 +21,7 @@ import Register from "./pages/Register";
 import New from "./pages/New";
 import Detail from './pages/Detail';
 import Profile from './pages/Profile';
+import About from "./pages/About";
 
 const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
@@ -102,6 +103,7 @@ function App() {
               <Switch>
                 <Route path="/" exact component={Home}/>
                 <Route path="/login" exact component={Login}/>
+                <Route path="/about" exact component={About}/>
                 <Route path="/register" exact component={Register}/>
                 <Route path="/new" exact component={New}/>
                 <Route path="/detail/:itemId" component={Detail} />

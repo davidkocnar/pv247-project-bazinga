@@ -1,9 +1,9 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/styles';
-import { Button, Typography } from '@material-ui/core';
-import { useLoggedInUser } from '../firebase/auth';
+import {makeStyles} from '@material-ui/styles';
+import {Button, Typography} from '@material-ui/core';
+import {useLoggedInUser} from '../firebase/auth';
 import {
   offersCollection,
   categoriesCollection,
@@ -11,15 +11,18 @@ import {
   fileStorage,
   Category
 } from '../firebase/firestore';
-import { Redirect } from 'react-router';
-import { DropzoneArea } from 'material-ui-dropzone';
+import {Redirect} from 'react-router';
+import {DropzoneArea} from 'material-ui-dropzone';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useForm, Controller } from "react-hook-form";
+import {useForm, Controller} from "react-hook-form";
+import Autocomplete, {AutocompleteRenderInputParams} from "@material-ui/lab/Autocomplete";
+import cities from "../data/cz-cities-csu.json";
 
 type OfferFormData = {
   title: string;
   description: string;
   price: string,
+  location: string,
   category: string,
   email: string;
   phone: string
@@ -45,11 +48,14 @@ const New: FC = () => {
   const [availableCategories, setAvailableCategories] = useState<Category[]>([])
   const [error, setError] = useState<string>();
   const { control, handleSubmit, errors: fieldErrors } = useForm<OfferFormData>();
+  const locations: string[] = cities.cz.map((item) => {
+    return item.name
+  })
 
   const user = useLoggedInUser();
 
   const onSubmit = async (data: OfferFormData) => {
-    if(user){
+    if (user) {
       const categoryDocs = await categoriesCollection
         .where("name", "==", data.category)
         .get();
@@ -70,8 +76,7 @@ const New: FC = () => {
           categoryRef: categoryRef
         });
         setRedirect(true);
-      }
-      catch (error) {
+      } catch (error) {
         setError(error);
       }
     }
@@ -82,24 +87,22 @@ const New: FC = () => {
       try {
         const data = await categoriesCollection.get();
         setAvailableCategories(data.docs.map(doc => doc.data()));
-      }
-      catch (error) {
+      } catch (error) {
         setError(error);
       }
     })()
-  },[])
+  }, [])
 
-  const uploadImages = async (images:File[] | null) => {
+  const uploadImages = async (images: File[] | null) => {
     const imagesURLs: string[] = [];
-    if(images?.length){
+    if (images?.length) {
       images.forEach(async image => {
         const storageRef = fileStorage.child(`images/${image.name}`);
         try {
           await storageRef.put(image);
           const imgUrl = await storageRef.getDownloadURL();
           imagesURLs.push(imgUrl);
-        }
-        catch (error) {
+        } catch (error) {
           setError(error);
         }
       });
@@ -109,11 +112,11 @@ const New: FC = () => {
 
   const classes = useStyles();
 
-  if(redirect){
-    return <Redirect to="/" />
+  if (redirect) {
+    return <Redirect to="/"/>
   }
 
-  return(
+  return (
     <Grid container spacing={2} className={classes.newOfferContainer}>
 
       <Grid item xs={12}>
@@ -129,7 +132,9 @@ const New: FC = () => {
               dropzoneText={"Přetáhněte obrázky nebo je nahrajte kliknutím"}
               filesLimit={5}
               maxFileSize={1000000}
-              onChange={(files) => { uploadImages(files) }} />
+              onChange={(files) => {
+                uploadImages(files)
+              }}/>
           </Grid>
 
           <Grid item xs={12} lg={7}>
@@ -137,11 +142,11 @@ const New: FC = () => {
               name="title"
               as={
                 <TextField className={classes.offerInput}
-                  label="Co prodáváte? (max. 60 znaků)"
-                  variant="outlined"
-                  fullWidth
-                  helperText={fieldErrors.title ? fieldErrors.title.message : null}
-                  error={fieldErrors.title !== undefined}
+                           label="Co prodáváte? (max. 60 znaků)"
+                           variant="outlined"
+                           fullWidth
+                           helperText={fieldErrors.title ? fieldErrors.title.message : null}
+                           error={fieldErrors.title !== undefined}
                 />
               }
               control={control}
@@ -157,14 +162,14 @@ const New: FC = () => {
               name="description"
               as={
                 <TextField className={classes.offerInput}
-                  label="Detaily (max. 1 000 znaků) (nepovinné)"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  rows={8}
-                  rowsMax={8}
-                  helperText={fieldErrors.description ? fieldErrors.description.message : null}
-                  error={fieldErrors.description !== undefined}
+                           label="Detaily (max. 1 000 znaků) (nepovinné)"
+                           variant="outlined"
+                           fullWidth
+                           multiline
+                           rows={8}
+                           rowsMax={8}
+                           helperText={fieldErrors.description ? fieldErrors.description.message : null}
+                           error={fieldErrors.description !== undefined}
                 />
               }
               control={control}
@@ -178,12 +183,12 @@ const New: FC = () => {
               name="category"
               as={
                 <TextField className={classes.offerInput}
-                  label="Vyberte kategorii"
-                  variant="outlined"
-                  fullWidth
-                  select
-                  helperText={fieldErrors.category ? fieldErrors.category.message : null}
-                  error={fieldErrors.category !== undefined}
+                           label="Vyberte kategorii"
+                           variant="outlined"
+                           fullWidth
+                           select
+                           helperText={fieldErrors.category ? fieldErrors.category.message : null}
+                           error={fieldErrors.category !== undefined}
                 >
                   {availableCategories.map((category, i) => (
                     <MenuItem key={i} value={category.name}>
@@ -204,11 +209,11 @@ const New: FC = () => {
               name="price"
               as={
                 <TextField className={classes.offerInput}
-                  label="Cena"
-                  variant="outlined"
-                  fullWidth
-                  helperText={fieldErrors.price ? fieldErrors.price.message : null}
-                  error={fieldErrors.price !== undefined}
+                           label="Cena"
+                           variant="outlined"
+                           fullWidth
+                           helperText={fieldErrors.price ? fieldErrors.price.message : null}
+                           error={fieldErrors.price !== undefined}
                 />
               }
               control={control}
@@ -225,15 +230,49 @@ const New: FC = () => {
 
           <Grid item xs={12} lg={7}>
             <Controller
+              name="location"
+              render={({ onChange }) => (
+                <Autocomplete
+                  id="location"
+                  options={locations}
+                  fullWidth
+                  getOptionLabel={(item) => item}
+                  onChange={(e, data) => onChange(data)}
+                  renderInput={(params: AutocompleteRenderInputParams) =>
+                    <TextField
+                      {...params}
+                      label="Poloha"
+                      type="text"
+                      name="location"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      helperText={fieldErrors.location ? fieldErrors.location.message : null}
+                      error={fieldErrors.location !== undefined}
+                    />
+                  }
+                />
+              )}
+              onChange={([, data]: string[]) => data}
+              control={control}
+              defaultValue=""
+              rules={{
+                required: 'Vyberte město'
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} lg={7}>
+            <Controller
               name="email"
               as={
                 <TextField className={classes.offerInput}
-                  label="E-mail"
-                  variant="outlined"
-                  value={user?.email ?? ""}
-                  fullWidth
-                  helperText={fieldErrors.email ? fieldErrors.email.message : null}
-                  error={fieldErrors.email !== undefined}
+                           label="E-mail"
+                           variant="outlined"
+                           value={user?.email ?? ""}
+                           fullWidth
+                           helperText={fieldErrors.email ? fieldErrors.email.message : null}
+                           error={fieldErrors.email !== undefined}
                 />
               }
               control={control}
@@ -253,11 +292,11 @@ const New: FC = () => {
               name="phone"
               as={
                 <TextField className={classes.offerInput}
-                  label="Telefon (nepovinné)"
-                  variant="outlined"
-                  fullWidth
-                  helperText={fieldErrors.phone ? fieldErrors.phone.message : null}
-                  error={fieldErrors.phone !== undefined}
+                           label="Telefon (nepovinné)"
+                           variant="outlined"
+                           fullWidth
+                           helperText={fieldErrors.phone ? fieldErrors.phone.message : null}
+                           error={fieldErrors.phone !== undefined}
                 />
               }
               control={control}
@@ -279,7 +318,8 @@ const New: FC = () => {
               color="primary"
               type="submit"
               size="large"
-              variant="contained">
+              variant="contained"
+              style={{marginBottom: "3rem"}}>
               Vložit inzerát
             </Button>
           </Grid>
