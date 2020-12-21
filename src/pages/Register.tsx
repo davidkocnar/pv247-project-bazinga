@@ -7,7 +7,7 @@ import {
   Card,
   CardActions,
   CardContent,
-  Divider,
+  Divider, Grid,
   TextField,
   Typography
 } from "@material-ui/core";
@@ -47,6 +47,8 @@ const Register: FC = () => {
 
   return (
     <Box m="3rem">
+      <Grid container direction={"row"} spacing={8} alignItems={"center"} justify={"center"}>
+        <Grid item md={7} sm={10} xs={12}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card>
           <CardContent>
@@ -212,6 +214,8 @@ const Register: FC = () => {
           </CardActions>
         </Card>
       </form>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

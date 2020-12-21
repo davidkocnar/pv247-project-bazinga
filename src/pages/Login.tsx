@@ -16,8 +16,8 @@ const Login: FC = () => {
   }
 
   return (
-    <Grid container direction={"column"} spacing={4} alignItems={"center"} justify={"center"}>
-      <Grid item md={5} sm={10}>
+    <Grid container direction={"row"} spacing={8} alignItems={"center"} justify={"center"}>
+      <Grid item md={5} sm={10} xs={12}>
         <Box mt="3rem">
           <Card>
             <CardContent>
@@ -55,8 +55,7 @@ const Login: FC = () => {
                   <b>Zapomenuté heslo</b>
                 </Link>
               </Typography>
-            </CardContent>
-            <CardActions>
+
               <Button
                 variant="contained"
                 size="large"
@@ -64,25 +63,24 @@ const Login: FC = () => {
                 // Handling promise with chained handlers
                 onClick={() =>
                   signIn(email, password).catch(err => setError(err.message))
-                }
-              >
+                }>
                 Přihlásit
               </Button>
-            </CardActions>
+            </CardContent>
           </Card>
         </Box>
       </Grid>
-      <Grid item md={5} sm={10}>
+      <Grid item md={5} sm={10} xs={12}>
         <Card>
           <CardContent>
             <Typography variant="h6">Nemáte ještě účet?</Typography>
             <Typography variant="body1">Přidejte se k ostatním a sdílejte věci s příběhem.</Typography>
-            <Link to="/register" style={{textDecoration: "none"}}>
+            <Link to="/register" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
                 size="large"
                 color="primary"
-                style={{marginTop: "1rem"}}>
+                style={{ marginTop: "1rem" }}>
                 Vytvořit účet
               </Button>
             </Link>
