@@ -96,9 +96,12 @@ const New: FC = () => {
 
   const classes = useStyles();
 
+  if(redirect){
+    return <Redirect to="/" />
+  }
+
   return(
     <Grid container spacing={2} className={classes.newOfferContainer}>
-      {redirect ? <Redirect to="/"/> : <></>}
 
       <Grid item xs={12}>
         <Typography variant="h4">Vložit inzerát</Typography>
