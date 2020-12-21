@@ -83,12 +83,12 @@ const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, item
                             rules={{}}
                         />
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={4}>
                         <Button color="default" fullWidth onClick={() => closeUpdate(offer)} size="large" variant="contained" style={{ marginBottom: "3rem" }}>
                             Zrušit
               </Button>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={6}>
                         <Button color="primary" fullWidth type="submit" size="large" variant="contained" style={{ marginBottom: "3rem" }}>
                             Aktualizovat inzerát
               </Button>
