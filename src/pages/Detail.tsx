@@ -1,8 +1,8 @@
-import { Button, CircularProgress, Grid, GridList, GridListTile, makeStyles, TextField, Typography } from '@material-ui/core';
-import React, { FC, useMemo, useState } from 'react';
+import { Button, CircularProgress, Grid, GridList, GridListTile, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { Offer, offersCollection, UserData, usersCollection } from '../firebase/firestore';
+import { Offer, offersCollection, UserData, usersCollection, Category, categoriesCollection } from '../firebase/firestore';
 import Logo from '../images/logo.png';
 import { useLoggedInUser } from '../firebase/auth';
 import { Controller, useForm } from 'react-hook-form';
@@ -135,26 +135,70 @@ const OfferInfo: FC<{ offer: Offer }> = ({ offer }) => {
 
 const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, itemId: string }> = ({ offer, closeUpdate, itemId }) => {
   const { control, handleSubmit, errors: fieldErrors } = useForm<OfferFormData>();
+  const [availableCategories, setAvailableCategories] = useState<Category[]>([])
+  const [currentCategory, setCurrentCategory] = useState<Category>();
 
-  const onSubmit = async (data: OfferFormData) => {
-    const newOffer = {
-      ...offer,
-      price: data.price,
-      description: data.description
-    }
-    offersCollection.doc(itemId).update(newOffer).then(() => closeUpdate(newOffer));
+  useEffect(() => {
+    categoriesCollection.get().then(querySnapshot => {
+      setAvailableCategories(querySnapshot.docs.map(doc => doc.data()))
+    })
+    categoriesCollection.doc(offer.categoryRef?.id).get().then(querySnapshot => {
+      setCurrentCategory(querySnapshot.data());
+    })
+  }, [offer.categoryRef?.id])
+
+  const onSubmit = (data: OfferFormData) => {
+    console.log(data.category);
+    categoriesCollection.where("name", "==", data.category).get().then(querySnapshot => {
+      const newOffer = {
+        ...offer,
+        title: data.title,
+        price: data.price,
+        description: data.description,
+        categoryRef: querySnapshot.docs.map(doc => doc.ref)[0]
+      }
+      console.log(querySnapshot.docs.map(doc => doc.ref)[0])
+      console.log(offer.categoryRef)
+      offersCollection.doc(itemId).update(newOffer).then(() => closeUpdate(newOffer)).catch(error => console.error(error));
+    }).catch(error => console.error(error));
   }
 
   return (
     <Grid item xs={10} md={5}>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+      {currentCategory ? <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
         <Grid container justify="center" spacing={2}>
+          <Grid item xs={12}>
+            <Controller
+              name="title"
+              as={<TextField label="Název" variant="outlined" fullWidth helperText={fieldErrors.title ? fieldErrors.title.message : null} error={fieldErrors.title !== undefined} />}
+              control={control}
+              defaultValue={offer.title}
+            />
+          </Grid>
           <Grid item xs={12}>
             <Controller
               name="price"
               as={<TextField label="Cena" variant="outlined" fullWidth helperText={fieldErrors.title ? fieldErrors.title.message : null} error={fieldErrors.title !== undefined} />}
               control={control}
               defaultValue={offer.price}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+              name="category"
+              as={
+                <TextField label="Kategorie" variant="outlined" fullWidth select helperText={fieldErrors.category ? fieldErrors.category.message : null} error={fieldErrors.category !== undefined}>
+                  {availableCategories.map((category, i) => (
+                    <MenuItem key={i} value={category.name}>
+                      {category.name}
+                    </MenuItem>))}
+                </TextField>
+              }
+              control={control}
+              defaultValue={currentCategory.name}
+              rules={{
+                required: 'Vyberte kategorii prodávaného produktu'
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -179,7 +223,7 @@ const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, item
             </Button>
           </Grid>
         </Grid>
-      </form>
+      </form> : <CircularProgress color="secondary" />}
     </Grid>
   );
 }
