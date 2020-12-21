@@ -35,6 +35,13 @@ export const useStyles = makeStyles(theme => ({
   logo: { verticalAlign: 'middle', marginRight: theme.spacing(2) },
   disable: { color: "#888888" },
   input: { textAlign: "left" },
+  toolbarSub: {
+    display: 'flex',
+    flex: '1 0 360',
+    alignContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap'
+  }
 }));
 
 // MUI theme override
@@ -89,7 +96,7 @@ function App() {
           <AppBar color="transparent" position="static" variant="outlined">
             {/* Navigation rendered on all pages */}
             <Toolbar className={classes.toolbar}>
-              <div>
+              <div className={classes.toolbarSub}>
                 <Link className={classes.link} to="/">
                   <img src={Logo} alt="logo" width={80} className={classes.logo}/>
                 </Link>
@@ -100,7 +107,7 @@ function App() {
                   <Button className={classes.menuButton}>O službě</Button>
                 </Link>
               </div>
-              <div>
+              <div className={classes.toolbarSub}>
                 {user === null && (
                   <Link className={classes.link} to="/login">
                     <Button className={classes.menuButton} startIcon={<PersonIcon/>}>Přihlásit</Button>

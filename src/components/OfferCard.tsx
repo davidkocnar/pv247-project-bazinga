@@ -30,7 +30,7 @@ const OfferCard: FC<OfferCardProps> = ({price, imgPaths, title, id}) => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} lg={3}>
+    <Grid item xs={12} md={6} lg={3}>
       <Link className={classes.link} to={`/detail/${id}`}>
         <Card>
           <CardActionArea>
