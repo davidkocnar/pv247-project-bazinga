@@ -1,12 +1,8 @@
 import React, {FC, useState} from 'react';
 import {resetPassword, signIn, useLoggedInUser} from "../firebase/auth";
 import {Link, Redirect} from 'react-router-dom';
-import {Button, Card, CardContent, Grid, makeStyles, TextField, Typography, Link as MuiLink} from "@material-ui/core";
-
-const useStyles = makeStyles(theme => ({
-  margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
-  link: { textDecoration: 'none' },
-}));
+import {Button, Card, CardContent, Grid, TextField, Typography, Link as MuiLink} from "@material-ui/core";
+import {useStyles} from "../App";
 
 const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -93,7 +89,7 @@ const Login: FC = () => {
           <CardContent>
             <Typography variant="h5">Nemáte ještě účet?</Typography>
             <Typography variant="body1">Přidejte se k ostatním a sdílejte věci s příběhem.</Typography>
-            <Link to="/register" className={classes.link} style={{ textDecoration: "none" }}>
+            <Link to="/register" className={classes.link}>
               <Button
                 variant="contained"
                 size="large"

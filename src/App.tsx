@@ -24,10 +24,13 @@ import Profile from './pages/Profile';
 import About from "./pages/About";
 import ProfileEdit from "./pages/ProfileEdit";
 
-const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   toolbar: { display: 'flex', justifyContent: 'space-between' },
+  margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
+  marginTop: { marginTop: theme.spacing(4) },
   menuButton: { marginRight: theme.spacing(2) },
   link: { textDecoration: 'none' },
+  divider: { margin: "1.5rem 1rem 1rem 1rem" },
   logo: { verticalAlign: 'middle', marginRight: theme.spacing(2) }
 }));
 
@@ -48,11 +51,18 @@ const ourTheme = createMuiTheme({
     h3: {
       marginBottom: "1rem"
     },
+    h4: {
+      marginBottom: "0.8rem"
+    },
     h5: {
       marginBottom: "0.5rem"
     },
     subtitle1: {
       marginBottom: "1rem"
+    },
+    body1: {
+      marginTop: "0.2rem",
+      marginBottom: "0.2rem"
     }
   }
 });

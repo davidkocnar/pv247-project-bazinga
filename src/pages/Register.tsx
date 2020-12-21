@@ -6,13 +6,14 @@ import {
   Card,
   CardActions,
   CardContent,
-  Divider, Grid, makeStyles,
+  Divider, Grid,
   TextField,
   Typography
 } from "@material-ui/core";
 import Autocomplete, {AutocompleteRenderInputParams} from "@material-ui/lab/Autocomplete";
 import {useForm, Controller} from "react-hook-form";
 import cities from '../data/cz-cities-csu.json';
+import {useStyles} from "../App";
 
 type RegisterData = {
   name: string,
@@ -22,12 +23,6 @@ type RegisterData = {
   email: string,
   password: string
 }
-
-const useStyles = makeStyles(theme => ({
-  margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
-  link: { textDecoration: 'none' },
-  divider: { margin: "1.5rem 1rem 1rem 1rem" },
-}));
 
 const Register: FC = () => {
 
