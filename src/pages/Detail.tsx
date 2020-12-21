@@ -45,7 +45,7 @@ const Detail: FC<RouteComponentProps<DetailParamProps>> = (props: RouteComponent
         setMainImage(querySnapshot.data()?.imgPaths[0])
       }
     })
-  }, [])
+  }, [props.match.params.itemId])
 
   useMemo(() => {
     usersCollection.doc(offer?.userRef.uid).get().then(querySnapshot => {
