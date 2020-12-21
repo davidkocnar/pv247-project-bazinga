@@ -1,9 +1,11 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import OfferCard from '../components/OfferCard';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { categoriesCollection, Category, Offer, offersCollection } from '../firebase/firestore';
-import { FormControl, InputLabel, Select } from '@material-ui/core';
+import {categoriesCollection, Category, Offer, offersCollection} from '../firebase/firestore';
+import {FormControl} from '@material-ui/core';
+import MenuItem from "@material-ui/core/MenuItem";
+import {useStyles} from "../App";
 
 type Offers = Record<string, Offer>;
 type Categories = Record<string, Category>;
@@ -14,6 +16,7 @@ const Home: FC = () => {
   const [search, setSearch] = useState<string>("");
   const [categories, setCategories] = useState<Categories>({});
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const classes = useStyles();
 
   useEffect(() => {
     offersCollection.get().then(querySnapshot => {
@@ -26,23 +29,29 @@ const Home: FC = () => {
   }, [])
 
   return (
-    <Grid container spacing={2} >
+    <Grid container spacing={2}>
       <Grid item xs={12} sm={4}>
         <FormControl fullWidth variant="outlined">
-          <InputLabel htmlFor="outlined-age-native-simple">Kategorie</InputLabel>
-          <Select
-            native
-            value={selectedCategory}
-            onChange={e => {if (typeof e.target.value === 'string') {setSelectedCategory(e.target.value)}}}
+          <TextField
             label="Kategorie"
-            inputProps={{
-              name: "Kategorie",
-              id: "outlined-age-native-simple"
+            variant="outlined"
+            value={selectedCategory}
+            className={classes.input}
+            onChange={e => {
+              setSelectedCategory(e.target.value)
             }}
-          >
-            <option aria-label="None" value="" />
-            {Object.keys(categories).map(id => (<option key={id} value={id}>{categories[id].name}</option>))}
-          </Select>
+            select>
+            {[""].concat(Object.keys(categories)).map(id => (
+              categories[id]?.name ?
+                <MenuItem key={id} value={id}>
+                  {categories[id].name}
+                </MenuItem>
+                :
+                <MenuItem key={id} value={""} className={classes.disable}>
+                  Zobrazit vše
+                </MenuItem>
+            ))}
+          </TextField>
         </FormControl>
       </Grid>
 

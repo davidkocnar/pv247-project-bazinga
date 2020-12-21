@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Card,
-  CardActions,
   CardContent, CircularProgress,
   Grid,
   TextField,
@@ -179,8 +178,7 @@ const ProfileEdit: FC = () => {
                       <b>{error}</b>
                     </Typography>
                   )}
-                </CardContent>
-                <CardActions>
+
                   <Button
                     variant="contained"
                     size="large"
@@ -188,7 +186,7 @@ const ProfileEdit: FC = () => {
                     type="submit">
                     Uložit
                   </Button>
-                </CardActions>
+                </CardContent>
               </Card>
             </form>
           )}

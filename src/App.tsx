@@ -23,15 +23,18 @@ import Detail from './pages/Detail';
 import Profile from './pages/Profile';
 import About from "./pages/About";
 import ProfileEdit from "./pages/ProfileEdit";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 export const useStyles = makeStyles(theme => ({
-  toolbar: { display: 'flex', justifyContent: 'space-between' },
+  toolbar: { display: 'flex', justifyContent: 'space-between', backgroundColor: "#fff" },
   margin: { marginBottom: theme.spacing(2), marginTop: theme.spacing(2) },
   marginTop: { marginTop: theme.spacing(4) },
   menuButton: { marginRight: theme.spacing(2), marginTop: "0" },
   link: { textDecoration: 'none' },
   divider: { margin: "1.5rem 1rem 1rem 1rem" },
-  logo: { verticalAlign: 'middle', marginRight: theme.spacing(2) }
+  logo: { verticalAlign: 'middle', marginRight: theme.spacing(2) },
+  disable: { color: "#888888" },
+  input: { textAlign: "left" },
 }));
 
 // MUI theme override
@@ -44,8 +47,9 @@ const ourTheme = createMuiTheme({
       main: '#2b2d40',
     },
     background: {
-      default: '#e0e0e0'
-    }
+      default: '#fafafa',
+      paper: '#fff'
+    },
   },
   typography: {
     h3: {
@@ -80,65 +84,67 @@ function App() {
 
   return (
     <MuiThemeProvider theme={ourTheme}>
-      <Router>
-        <AppBar color="transparent" position="static" variant="outlined">
-          {/* Navigation rendered on all pages */}
-          <Toolbar className={classes.toolbar}>
-            <div>
-              <Link className={classes.link} to="/">
-                <img src={Logo} alt="logo" width={80} className={classes.logo}/>
-              </Link>
-              <Link className={classes.link} to="/">
-                <Button className={classes.menuButton}>Přehled nabídek</Button>
-              </Link>
-              <Link className={classes.link} to="/about">
-                <Button className={classes.menuButton}>O službě</Button>
-              </Link>
-            </div>
-            <div>
-              {user === null && (
-                <Link className={classes.link} to="/login">
-                  <Button className={classes.menuButton} startIcon={<PersonIcon/>}>Přihlásit</Button>
+      <CssBaseline>
+        <Router>
+          <AppBar color="transparent" position="static" variant="outlined">
+            {/* Navigation rendered on all pages */}
+            <Toolbar className={classes.toolbar}>
+              <div>
+                <Link className={classes.link} to="/">
+                  <img src={Logo} alt="logo" width={80} className={classes.logo}/>
                 </Link>
-              )}
-              {user && (
-                <>
-                  <Link className={classes.link} to="/new">
-                    <Button variant="contained" color="secondary" startIcon={<AddCircleIcon/>}
-                            className={classes.menuButton}>Vložit inzerát</Button>
+                <Link className={classes.link} to="/">
+                  <Button className={classes.menuButton}>Přehled nabídek</Button>
+                </Link>
+                <Link className={classes.link} to="/about">
+                  <Button className={classes.menuButton}>O službě</Button>
+                </Link>
+              </div>
+              <div>
+                {user === null && (
+                  <Link className={classes.link} to="/login">
+                    <Button className={classes.menuButton} startIcon={<PersonIcon/>}>Přihlásit</Button>
                   </Link>
-                  <Link className={classes.link} to="/profile">
-                    <Button className={classes.menuButton}>Můj profil</Button>
-                  </Link>
-                  <Link className={classes.link} to="/">
-                    <Button className={classes.menuButton} onClick={signOut}>Odhlásit</Button>
-                  </Link>
-                </>
-              )}
-            </div>
-          </Toolbar>
-        </AppBar>
+                )}
+                {user && (
+                  <>
+                    <Link className={classes.link} to="/new">
+                      <Button variant="contained" color="secondary" startIcon={<AddCircleIcon/>}
+                              className={classes.menuButton}>Vložit inzerát</Button>
+                    </Link>
+                    <Link className={classes.link} to="/profile">
+                      <Button className={classes.menuButton}>Můj profil</Button>
+                    </Link>
+                    <Link className={classes.link} to="/">
+                      <Button className={classes.menuButton} onClick={signOut}>Odhlásit</Button>
+                    </Link>
+                  </>
+                )}
+              </div>
+            </Toolbar>
+          </AppBar>
 
-        <main className="App">
-          <Container maxWidth="lg">
-            {/* Wait for user session */}
-            {user === undefined ? (
-              <CircularProgress/>
-            ) : (
-              <Switch>
-                <Route path="/" exact component={Home}/>
-                <Route path="/login" exact component={Login}/>
-                <Route path="/about" exact component={About}/>
-                <Route path="/profileedit" exact component={ProfileEdit}/>
-                <Route path="/register" exact component={Register}/>
-                <Route path="/new" exact component={New}/>
-                <Route path="/detail/:itemId" component={Detail} />
-                <Route path="/profile" component={Profile}/>
-              </Switch>
-            )}
-          </Container>
-        </main>
-      </Router>
+          <main className="App">
+            <Container maxWidth="lg">
+              {/* Wait for user session */}
+              {user === undefined ? (
+                <CircularProgress/>
+              ) : (
+                <Switch>
+                  <Route path="/" exact component={Home}/>
+                  <Route path="/login" exact component={Login}/>
+                  <Route path="/about" exact component={About}/>
+                  <Route path="/profileedit" exact component={ProfileEdit}/>
+                  <Route path="/register" exact component={Register}/>
+                  <Route path="/new" exact component={New}/>
+                  <Route path="/detail/:itemId" component={Detail}/>
+                  <Route path="/profile" component={Profile}/>
+                </Switch>
+              )}
+            </Container>
+          </main>
+        </Router>
+      </CssBaseline>
     </MuiThemeProvider>
   );
 }
