@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {signIn, useLoggedInUser} from "../firebase/auth";
 import {Link, Redirect} from 'react-router-dom';
-import {Box, Button, Card, CardActions, CardContent, Grid, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Card, CardContent, Grid, TextField, Typography} from "@material-ui/core";
 
 const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -60,7 +60,6 @@ const Login: FC = () => {
                 variant="contained"
                 size="large"
                 color="primary"
-                // Handling promise with chained handlers
                 onClick={() =>
                   signIn(email, password).catch(err => setError(err.message))
                 }>

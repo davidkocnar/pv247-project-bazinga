@@ -13,8 +13,9 @@ import {
 } from "@material-ui/core";
 import Autocomplete, {AutocompleteRenderInputParams} from "@material-ui/lab/Autocomplete";
 import {useForm, Controller} from "react-hook-form";
+import cities from '../data/cz-cities-csu.json';
 
-export type RegisterData = {
+type RegisterData = {
   name: string,
   surname: string | undefined,
   location: string,
@@ -37,9 +38,9 @@ const Register: FC = () => {
 
   const [error, setError] = useState<string>();
   const isLoggedIn = useLoggedInUser();
-  const locations: string[] = [
-    "Brno", "Praha", "Ostrava"
-  ]
+  const locations: string[] = cities.cz.map((item) => {
+    return item.name
+  })
 
   if (isLoggedIn) {
     return <Redirect to="/"/>;
@@ -49,171 +50,172 @@ const Register: FC = () => {
     <Box m="3rem">
       <Grid container direction={"row"} spacing={8} alignItems={"center"} justify={"center"}>
         <Grid item md={7} sm={10} xs={12}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Card>
-          <CardContent>
-            <Typography variant="h5" component="h1">
-              Registrace
-            </Typography>
-            <Typography variant="subtitle1" style={{ marginBottom: "1rem" }}>
-              Vytvořte si nový účet a užívejte si Bazingu s námi.
-            </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Card>
+              <CardContent>
+                <Typography variant="h5" component="h1">
+                  Registrace
+                </Typography>
+                <Typography variant="subtitle1" style={{ marginBottom: "1rem" }}>
+                  Vytvořte si nový účet a užívejte si Bazingu s námi.
+                </Typography>
 
-            <Controller
-              name="name"
-              as={
-                <TextField
-                  label="Jméno"
-                  type="text"
+                <Controller
                   name="name"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={fieldErrors.name ? fieldErrors.name.message : null}
-                  error={fieldErrors.name !== undefined}
-                />
-              }
-              control={control}
-              defaultValue=""
-              rules={{
-                required: 'Vyplňte prosím své jméno'
-              }}
-            />
-
-            <Controller
-              name="surname"
-              as={
-                <TextField
-                  label="Přijmení (nepovinné)"
-                  type="text"
-                  name="surname"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={fieldErrors.surname ? fieldErrors.surname.message : null}
-                  error={fieldErrors.surname !== undefined}
-                />
-              }
-              control={control}
-              defaultValue=""
-              rules={{}}
-            />
-
-            <Controller
-              name="location"
-              render={({ onChange, ...props }) => (
-                <Autocomplete
-                  id="location"
-                  options={locations}
-                  fullWidth
-                  onChange={(e, data) => onChange(data)}
-                  renderInput={(params: AutocompleteRenderInputParams) =>
+                  as={
                     <TextField
-                      {...params}
-                      label="Poloha"
+                      label="Jméno"
                       type="text"
-                      name="location"
+                      name="name"
                       fullWidth
                       margin="normal"
                       variant="outlined"
-                      helperText={fieldErrors.location ? fieldErrors.location.message : null}
-                      error={fieldErrors.location !== undefined}
+                      helperText={fieldErrors.name ? fieldErrors.name.message : null}
+                      error={fieldErrors.name !== undefined}
                     />
                   }
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: 'Vyplňte prosím své jméno'
+                  }}
                 />
-              )}
-              onChange={([, data]: string[]) => data}
-              control={control}
-              defaultValue=""
-              rules={{
-                required: 'Vyberte město'
-              }}
-            />
 
-            <Controller
-              name="phone"
-              as={
-                <TextField
-                  label="Telefon (nepovinné)"
-                  type="tel"
+                <Controller
+                  name="surname"
+                  as={
+                    <TextField
+                      label="Přijmení (nepovinné)"
+                      type="text"
+                      name="surname"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      helperText={fieldErrors.surname ? fieldErrors.surname.message : null}
+                      error={fieldErrors.surname !== undefined}
+                    />
+                  }
+                  control={control}
+                  defaultValue=""
+                  rules={{}}
+                />
+
+                <Controller
+                  name="location"
+                  render={({ onChange }) => (
+                    <Autocomplete
+                      id="location"
+                      options={locations}
+                      fullWidth
+                      getOptionLabel={(item) => item}
+                      onChange={(e, data) => onChange(data)}
+                      renderInput={(params: AutocompleteRenderInputParams) =>
+                        <TextField
+                          {...params}
+                          label="Poloha"
+                          type="text"
+                          name="location"
+                          fullWidth
+                          margin="normal"
+                          variant="outlined"
+                          helperText={fieldErrors.location ? fieldErrors.location.message : null}
+                          error={fieldErrors.location !== undefined}
+                        />
+                      }
+                    />
+                  )}
+                  onChange={([, data]: string[]) => data}
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: 'Vyberte město'
+                  }}
+                />
+
+                <Controller
                   name="phone"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={fieldErrors.phone ? fieldErrors.phone.message : null}
-                  error={fieldErrors.phone !== undefined}
+                  as={
+                    <TextField
+                      label="Telefon (nepovinné)"
+                      type="tel"
+                      name="phone"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      helperText={fieldErrors.phone ? fieldErrors.phone.message : null}
+                      error={fieldErrors.phone !== undefined}
+                    />
+                  }
+                  control={control}
+                  defaultValue=""
+                  rules={{}}
                 />
-              }
-              control={control}
-              defaultValue=""
-              rules={{}}
-            />
 
-            <Divider style={{ margin: "1.5rem 1rem 1rem 1rem" }}/>
+                <Divider style={{ margin: "1.5rem 1rem 1rem 1rem" }}/>
 
-            <Controller
-              name="email"
-              as={
-                <TextField
-                  label="E-mail"
-                  type="email"
+                <Controller
                   name="email"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={fieldErrors.email ? fieldErrors.email.message : null}
-                  error={fieldErrors.email !== undefined}
+                  as={
+                    <TextField
+                      label="E-mail"
+                      type="email"
+                      name="email"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      helperText={fieldErrors.email ? fieldErrors.email.message : null}
+                      error={fieldErrors.email !== undefined}
+                    />
+                  }
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: 'Vyplňte svůj e-mail',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: 'Špatný formát e-mailové adresy'
+                    }
+                  }}
                 />
-              }
-              control={control}
-              defaultValue=""
-              rules={{
-                required: 'Vyplňte svůj e-mail',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Špatný formát e-mailové adresy'
-                }
-              }}
-            />
 
-            <Controller
-              name="password"
-              as={
-                <TextField
-                  label="Heslo"
-                  type="password"
+                <Controller
                   name="password"
-                  fullWidth
-                  margin="normal"
-                  variant="outlined"
-                  helperText={fieldErrors.password ? fieldErrors.password.message : null}
-                  error={fieldErrors.password !== undefined}
+                  as={
+                    <TextField
+                      label="Heslo"
+                      type="password"
+                      name="password"
+                      fullWidth
+                      margin="normal"
+                      variant="outlined"
+                      helperText={fieldErrors.password ? fieldErrors.password.message : null}
+                      error={fieldErrors.password !== undefined}
+                    />
+                  }
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: 'Zadejte heslo'
+                  }}
                 />
-              }
-              control={control}
-              defaultValue=""
-              rules={{
-                required: 'Zadejte heslo'
-              }}
-            />
 
-            {error && (
-              <Typography variant="subtitle2" align="left" color="error" paragraph>
-                <b>{error}</b>
-              </Typography>
-            )}
-          </CardContent>
-          <CardActions>
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
-              type="submit">
-              Vytvořit účet
-            </Button>
-          </CardActions>
-        </Card>
-      </form>
+                {error && (
+                  <Typography variant="subtitle2" align="left" color="error" paragraph>
+                    <b>{error}</b>
+                  </Typography>
+                )}
+              </CardContent>
+              <CardActions>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  type="submit">
+                  Vytvořit účet
+                </Button>
+              </CardActions>
+            </Card>
+          </form>
         </Grid>
       </Grid>
     </Box>

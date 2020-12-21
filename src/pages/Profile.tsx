@@ -50,7 +50,7 @@ const Profile: FC = () => {
                 Telefon: {userData?.phone ? userData.phone : "nezadán"}
               </Typography>
 
-              <Box mt={6}>
+              <Box mt={8}>
                 <Typography variant={"h5"} style={{ marginBottom: "1rem" }}>
                   Vaše nabídky
               </Typography>
