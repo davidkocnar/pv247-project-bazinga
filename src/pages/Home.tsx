@@ -9,6 +9,7 @@ type Offers = Record<string, Offer>;
 const Home: FC = () => {
 
   const [offers, setOffers] = useState<Offers>({});
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     offersCollection.get().then(querySnapshot => {
@@ -19,10 +20,10 @@ const Home: FC = () => {
   return (
     <Grid container spacing={2} >
       <Grid item xs={12} lg={12}>
-        <TextField id="searchOfferInp" label="Hledat..." variant="outlined" fullWidth />
+        <TextField id="searchOfferInp" label="Hledat..." variant="outlined" value={search} onChange={e => setSearch(e.target.value)} fullWidth />
       </Grid>
       <Grid item container xs={12} lg={12} spacing={2}>
-        {Object.keys(offers).map(key => {
+        {Object.keys(offers).filter(key => offers[key].title.toLowerCase().includes(search?.toLowerCase() || "")).map(key => {
           const offer = offers[key];
           return (<OfferCard
             price={offer.price}
