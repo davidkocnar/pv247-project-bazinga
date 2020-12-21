@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import { useLoggedInUser } from "../firebase/auth";
 import { Offer, offersCollection, UserData, usersCollection } from "../firebase/firestore";
-import { Box, CircularProgress, Typography } from "@material-ui/core";
+import {Box, Button, CircularProgress, Typography} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import OfferCard from "../components/OfferCard";
+import {Link} from "react-router-dom";
 
 type Offers = Record<string, Offer>;
 
@@ -35,7 +36,7 @@ const Profile: FC = () => {
   }, [user])
 
   return (
-    <Grid container spacing={2} justify="flex-start">
+    <Grid container spacing={2} justify="center">
       <Grid item xs={12} lg={10}>
         {userData === undefined && offers === undefined ? (
           <Box mt="5rem"><CircularProgress /></Box>
@@ -49,6 +50,15 @@ const Profile: FC = () => {
               <Typography variant={"body1"} style={{ marginTop: "0.5rem" }}>
                 Telefon: {userData?.phone ? userData.phone : "nezadán"}
               </Typography>
+              <Link to="/profileedit" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  style={{ marginTop: "1rem" }}>
+                  Upravit profil
+                </Button>
+              </Link>
 
               <Box mt={8}>
                 <Typography variant={"h5"} style={{ marginBottom: "1rem" }}>
