@@ -159,8 +159,8 @@ const OfferEdit: FC<{ offer: Offer, closeUpdate: (newOffer: Offer) => void, item
       }
       console.log(querySnapshot.docs.map(doc => doc.ref)[0])
       console.log(offer.categoryRef)
-      offersCollection.doc(itemId).update(newOffer).then(() => closeUpdate(newOffer)).catch(error => console.error(error));
-    }).catch(error => console.error(error));
+      offersCollection.doc(itemId).update(newOffer).then(() => closeUpdate(newOffer));
+    });
   }
 
   return (
